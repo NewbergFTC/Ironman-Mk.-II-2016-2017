@@ -19,11 +19,15 @@ abstract public class EncoderTest extends LinearOpMode {
     private DcMotorController _Leftcon;
     private DcMotorController _Rightcon;
 
-    //final double GEAR_ONE_TEETH= 16;
-    //final double GEAR_TWO_TEETH= 32 ;
+
+    final double GEAR_ONE_TEETH= 16;
     final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
-    //final double DISTANCE= 25;
+    final double DISTANCE= 24;
     final double COUNTS_PER_REVOLUTION= 1120;
+    double INCHES= DISTANCE;
+    double goal = (GEAR_ONE_TEETH)*(COUNTS_PER_REVOLUTION/WHEEL_CIRCUMFERENCE)*INCHES;
+    int distance= 35328;
+    //the .setTargetPosition()reads the amount of clicks the encoders goes by. I uses the top equation to get this value
 
     public void runOpMode() throws InterruptedException {
         leftfront = hardwareMap.dcMotor.get("lf");
@@ -36,20 +40,34 @@ abstract public class EncoderTest extends LinearOpMode {
 
         rightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        int ticks = rightfront.getCurrentPosition();
+        leftfront.getCurrentPosition();
+        rightfront.getCurrentPosition();
+
+
     }
 
     @Override
     public synchronized void waitForStart() throws InterruptedException {
         waitForStart();
-        while(opModeIsActive()) {
-            //double INCHES = DISTANCE
-            double goal= (GEAR_ONE_TEETH)*(COUNTS_PER_REVOLUTION/WHEEL_CIRCUMFERENCE)*INCHES;
 
-            _Rightcon.set
 
+        leftfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        rightfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
+
+        rightfront.setTargetPosition(distance);
+        leftfront.setTargetPosition(distance);
+
+        rightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftfront.setPower(0.5);
+        rightfront.setPower(0.5);
+
+        while (leftfront.isBusy() && rightfront.isBusy()) {
 
         }
+        leftfront.setPower(0);
+        rightfront.setPower(0);
     }
 }
 
