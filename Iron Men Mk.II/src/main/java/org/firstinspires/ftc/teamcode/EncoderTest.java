@@ -26,7 +26,7 @@ abstract public class EncoderTest extends LinearOpMode {
     double INCHES= DISTANCE;
     double goal = (COUNTS_PER_REVOLUTION/WHEEL_CIRCUMFERENCE)*INCHES;
     int distance= 2208;
-    //the .setTargetPosition()reads the amount of clicks the encoders goes by. I uses the top equation to get this value
+    //the .setTargetPosition()reads the amount of clicks the encoders goes by. I used the top equation to get this value
 
     public void runOpMode() throws InterruptedException {
         leftfront = hardwareMap.dcMotor.get("lf");
