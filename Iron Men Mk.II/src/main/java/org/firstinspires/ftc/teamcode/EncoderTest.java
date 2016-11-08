@@ -20,13 +20,12 @@ abstract public class EncoderTest extends LinearOpMode {
     private DcMotorController _Rightcon;
 
 
-    final double GEAR_ONE_TEETH= 16;
     final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
     final double DISTANCE= 24;
     final double COUNTS_PER_REVOLUTION= 1120;
     double INCHES= DISTANCE;
-    double goal = (GEAR_ONE_TEETH)*(COUNTS_PER_REVOLUTION/WHEEL_CIRCUMFERENCE)*INCHES;
-    int distance= 35328;
+    double goal = (COUNTS_PER_REVOLUTION/WHEEL_CIRCUMFERENCE)*INCHES;
+    int distance= 2208;
     //the .setTargetPosition()reads the amount of clicks the encoders goes by. I uses the top equation to get this value
 
     public void runOpMode() throws InterruptedException {
