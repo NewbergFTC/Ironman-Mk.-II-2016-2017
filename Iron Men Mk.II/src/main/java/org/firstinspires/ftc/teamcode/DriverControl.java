@@ -52,9 +52,9 @@ public class DriverControl extends OpMode{
         rightback.setPower(backrightpower);
 
         //the code for the motor for the collector
-        if (gamepad1.a) {
-            collector.setPower(1);
+        if (gamepad1.a) {           //detects if a is being pressed
+            collector.setPower(1);  //sets power to 1
         }
-
+        collector.setPower(0);      //if not it sets the power to zero
     }
 }
