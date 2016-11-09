@@ -10,7 +10,8 @@ import com.qualcomm.robotcore.hardware.ServoController;
  */
 @TeleOp(name = "Driver Control")
 public class DriverControl extends OpMode{
-//Initializes the motors
+
+    //Initializes the motors
     private DcMotor leftfront;
     private DcMotor leftback;
     private DcMotor rightfront;
@@ -40,10 +41,12 @@ public class DriverControl extends OpMode{
         float rightY = -gamepad1.right_stick_y; //Gets values for the y from the controller
 
         //values for the power for each wheel---These values can be played around with
-        double backleftpower = (leftY);
+        double backleftpower = (rightY);
         double backrightpower = (rightY);
         double frontleftpower = (leftY);
-        double frontrightpower = (rightY);
+        double frontrightpower = (leftY);
+        double collectorpower = 1;
+        double nopower= 0;
 
         //Sets the power for each of the wheels
         leftfront.setPower(frontleftpower);
@@ -53,8 +56,8 @@ public class DriverControl extends OpMode{
 
         //the code for the motor for the collector
         if (gamepad1.a) {           //detects if a is being pressed
-            collector.setPower(1);  //sets power to 1
+            collector.setPower(collectorpower);  //sets power to 1
         }
-        collector.setPower(0);      //if not it sets the power to zero
+        collector.setPower(nopower);      //if the gamepad1.a is not pressed it sets the power to zero
     }
 }

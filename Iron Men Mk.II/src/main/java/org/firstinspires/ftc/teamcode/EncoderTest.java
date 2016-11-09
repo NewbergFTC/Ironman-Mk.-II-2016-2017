@@ -16,8 +16,8 @@ abstract public class EncoderTest extends LinearOpMode {
     private DcMotor leftback;
     private DcMotor rightfront;
     private DcMotor rightback;
-    private DcMotorController _Leftcon;
-    private DcMotorController _Rightcon;
+    double nopower=0;
+    double halfpower=0;
 
 
     final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
@@ -47,9 +47,8 @@ abstract public class EncoderTest extends LinearOpMode {
 
     @Override
     public synchronized void waitForStart() throws InterruptedException {
-        waitForStart();
 
-
+        waitForStart(); //wait fot the start of automonous; pressing the button.
         leftfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
         rightfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
 
@@ -59,14 +58,14 @@ abstract public class EncoderTest extends LinearOpMode {
         rightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftfront.setPower(0.5);
-        rightfront.setPower(0.5);
+        leftfront.setPower(halfpower);
+        rightfront.setPower(halfpower);
 
         while (leftfront.isBusy() && rightfront.isBusy()) {
 
         }
-        leftfront.setPower(0);
-        rightfront.setPower(0);
+        leftfront.setPower(nopower);
+        rightfront.setPower(nopower);
     }
 }
 
