@@ -28,16 +28,16 @@ abstract public class EncoderTest extends LinearOpMode {
     int distance= 2208;
     //the .setTargetPosition()reads the amount of clicks the encoders goes by. I used the top equation to get this value
 
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() throws InterruptedException { //Initializes the configuration for the phones
         leftfront = hardwareMap.dcMotor.get("lf");
         leftback = hardwareMap.dcMotor.get("lb");
         rightfront = hardwareMap.dcMotor.get("rf");
         rightback = hardwareMap.dcMotor.get("rb");
 
-        rightfront.setDirection(DcMotor.Direction.REVERSE);
+        rightfront.setDirection(DcMotor.Direction.REVERSE); //Reverses the motors
         rightback.setDirection(DcMotor.Direction.REVERSE);
 
-        rightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);  //Sets up the robot ready for encoders use
         leftfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftfront.getCurrentPosition();
         rightfront.getCurrentPosition();
@@ -52,19 +52,19 @@ abstract public class EncoderTest extends LinearOpMode {
         leftfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
         rightfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
 
-        rightfront.setTargetPosition(distance);
+        rightfront.setTargetPosition(distance); //sets the Target position for the motors
         leftfront.setTargetPosition(distance);
 
-        rightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
         leftfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftfront.setPower(halfpower);
+        leftfront.setPower(halfpower);         //sets the power to the Target value
         rightfront.setPower(halfpower);
 
-        while (leftfront.isBusy() && rightfront.isBusy()) {
+        while (leftfront.isBusy() && rightfront.isBusy()) {  //while the robot is going to the postion the encoders wont get any info
 
         }
-        leftfront.setPower(nopower);
+        leftfront.setPower(nopower); // sets the code to
         rightfront.setPower(nopower);
     }
 }
