@@ -1,34 +1,32 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.II;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
  * Created by Marcos on 10/19/2016.
  */
 @Autonomous(name = "Encoder Test")
-abstract public class EncoderTest extends LinearOpMode {
+ public abstract class EncoderTest extends LinearOpMode {
 
     private DcMotor leftfront;
     private DcMotor leftback;
     private DcMotor rightfront;
     private DcMotor rightback;
-    double nopower=0;
-    double halfpower=0;
+    double nopower = 0;
+    double halfpower = 0;
 
 
-    final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
-    final double DISTANCE= 24;
-    final double COUNTS_PER_REVOLUTION= 1120;
-    double INCHES= DISTANCE;
-    double goal = (COUNTS_PER_REVOLUTION/WHEEL_CIRCUMFERENCE)*INCHES;
-    int distance= 2208;
+    final double WHEEL_CIRCUMFERENCE = 3.875 * Math.PI;
+    final double DISTANCE = 24;
+    final double COUNTS_PER_REVOLUTION = 1120;
+    double INCHES = DISTANCE;
+    double goal = (COUNTS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE) * INCHES;
+    int distance = 2208;
     //the .setTargetPosition()reads the amount of clicks the encoders goes by. I used the top equation to get this value
 
-    public void runOpMode() throws InterruptedException { //Initializes the configuration for the phones
+    public void runOpMode() { //Initializes the configuration for the phones
         leftfront = hardwareMap.dcMotor.get("lf");
         leftback = hardwareMap.dcMotor.get("lb");
         rightfront = hardwareMap.dcMotor.get("rf");
@@ -42,13 +40,10 @@ abstract public class EncoderTest extends LinearOpMode {
         leftfront.getCurrentPosition();
         rightfront.getCurrentPosition();
 
+    while (opModeIsActive())
 
-    }
+        //waitForStart(); //wait fot the start of automonous; pressing the button.
 
-    @Override
-    public synchronized void waitForStart() throws InterruptedException {
-
-        waitForStart(); //wait fot the start of automonous; pressing the button.
         leftfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
         rightfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
 
@@ -58,15 +53,13 @@ abstract public class EncoderTest extends LinearOpMode {
         rightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
         leftfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftfront.setPower(halfpower);         //sets the power to the Target value
+        leftfront.setPower(halfpower);         //sets the power to the Target value. In this case its 0.5
         rightfront.setPower(halfpower);
 
         while (leftfront.isBusy() && rightfront.isBusy()) {  //while the robot is going to the postion the encoders wont get any info
 
         }
-        leftfront.setPower(nopower); // sets the code to
+        leftfront.setPower(nopower); // sets the motors with no power
         rightfront.setPower(nopower);
     }
 }
-
-

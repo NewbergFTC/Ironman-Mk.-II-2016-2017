@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.II;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoController;
+
 /**
  * Created by Marcos on 10/4/2016.
  */
@@ -36,13 +35,13 @@ public class DriverControl extends OpMode {
 
     @Override
     public void loop() {
-        float leftY = gamepad1.left_stick_y;    //Gets value for the x from tje controller
+        float leftY = gamepad1.left_stick_y;    //Gets value for the x from the controller
         float rightY = -gamepad1.right_stick_y; //Gets values for the y from the controller
 
         //the float and the collector power will enable the collector to move forward and backwards
-        float PowerForward = (float) .1;
-        float PowerBack = (float) -.1;
-        float collectorpower = (gamepad1.left_trigger >= 0.01) ? PowerForward : (gamepad1.right_trigger >= 0.01) ? PowerBack : 0;
+        float PowerForward = (float) 1;
+        float PowerBack = (float) 1;
+        float collectorpower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0;
 
         //values for the power for each wheel---These values can be played around with
         double backleftpower = (leftY);
