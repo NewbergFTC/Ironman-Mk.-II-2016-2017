@@ -26,3 +26,11 @@ build/
 
 *ASUS_PC_01*
 
+Iron Men Mk.II/src/main/java/org/firstinspires/ftc/II/BasicVisionSample.java
+Iron Men Mk.II/src/main/java/org/firstinspires/ftc/II/IIOpMode.java
+Iron Men Mk.II/src/main/java/org/firstinspires/ftc/II/LinearVisionSample.java
+Iron Men Mk.II/src/main/java/org/firstinspires/ftc/II/ManualVisionSample.java
+Iron Men Mk.II/src/main/java/org/firstinspires/ftc/II/NullOp.java
+Iron Men Mk.II/src/main/java/org/firstinspires/ftc/II/package-info.java
+ftc-visionlib/
+opencv-java/

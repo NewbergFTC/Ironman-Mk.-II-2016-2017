@@ -1,2 +1,4 @@
 include ':FtcRobotController'
 include ':Iron Men Mk.II'
+include ':opencv-java'
+include ':ftc-visionlib'

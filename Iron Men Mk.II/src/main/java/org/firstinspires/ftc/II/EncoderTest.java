@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * Created by Marcos on 10/19/2016.
  */
 @Autonomous(name = "Encoder Test")
- public abstract class EncoderTest extends LinearOpMode {
+public abstract class EncoderTest extends LinearOpMode {
 
     private DcMotor leftfront;
     private DcMotor leftback;
