@@ -39,10 +39,10 @@ public class DriverControl extends OpMode {
 
     @Override
     public void loop() {
-        float LeftY = gamepad1.left_stick_x;    //Gets value for the x from the controller
-        float RightY = gamepad1.right_stick_y;
+        float LeftY = gamepad1.left_stick_y;    //Gets value for the x from the controller
+        //float RightY = gamepad1.right_stick_y;
         float LeftX = gamepad1.left_stick_x;
-        float RightX = gamepad1.right_stick_x;
+        //float RightX = gamepad1.right_stick_x;
         //Gets values for the y from the controller
 
         //values for the power for each wheel---These values can be played around with
@@ -57,15 +57,15 @@ public class DriverControl extends OpMode {
             //Turn left
             leftfront.setPower(LeftX);
             leftback.setPower(LeftX);
-            leftback.setPower(-LeftX);
-            leftback.setPower(-LeftX);
+            rightfront.setPower(-LeftX);
+            rightback.setPower(-LeftX);
         }
         else if(LeftX > .8 )
         {
             leftfront.setPower(-LeftX);
             leftback.setPower(-LeftX);
-            leftback.setPower(LeftX);
-            leftback.setPower(LeftX);
+            rightfront.setPower(LeftX);
+            rightback.setPower(LeftX);
         }
         else
         {
