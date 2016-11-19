@@ -1,0 +1,17 @@
+package org.firstinspires.ftc.II;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.
+
+/**
+ * Created by Marcos on 11/19/2016.
+ */
+
+ abstract public class Encoder extends EncoderTest {
+
+
+    public void main() throws InterruptedException
+    {
+
+    }
+}
