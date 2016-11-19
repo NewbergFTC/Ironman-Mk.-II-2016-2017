@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by Marcos on 10/4/2016.
  */
-@TeleOp(name = "Driver Control")
-public class DriverControl extends OpMode {
+@TeleOp(name = "Driver Control 2")
+public class DriverControl2 extends OpMode {
 
     //Initializes the motors
     private DcMotor leftfront;
@@ -39,42 +39,8 @@ public class DriverControl extends OpMode {
 
     @Override
     public void loop() {
-        float LeftY = gamepad1.left_stick_x;    //Gets value for the x from the controller
-        float RightY = gamepad1.right_stick_y;
-        float LeftX = gamepad1.left_stick_x;
-        float RightX = gamepad1.right_stick_x;
-        //Gets values for the y from the controller
-
-        //values for the power for each wheel---These values can be played around with
-        double backleftpower;
-        double backrightpower;
-        double frontleftpower;
-        double frontrightpower;
-
-
-        if(LeftX < -.8)
-        {
-            //Turn left
-            leftfront.setPower(LeftX);
-            leftback.setPower(LeftX);
-            leftback.setPower(-LeftX);
-            leftback.setPower(-LeftX);
-        }
-        else if(LeftX > .8 )
-        {
-            leftfront.setPower(-LeftX);
-            leftback.setPower(-LeftX);
-            leftback.setPower(LeftX);
-            leftback.setPower(LeftX);
-        }
-        else
-        {
-            leftfront.setPower(LeftY);
-            leftback.setPower(LeftY);
-            rightfront.setPower(LeftY);
-            rightback.setPower(LeftY);
-        }
-
+        float rightX = gamepad1.left_stick_x;    //Gets value for the x from the controller
+        float leftY = -gamepad1.right_stick_y; //Gets values for the y from the controller
 
         //the float and the collector power will enable the collector to move forward and backwards
 
@@ -102,9 +68,16 @@ public class DriverControl extends OpMode {
         }
 
         //values for the power for each wheel---These values can be played around with
+        double backleftpower = (leftY);
+        double backrightpower = (rightX);
+        double frontleftpower = (leftY);
+        double frontrightpower = (rightX);
 
-
-        //Sets the power for the collector
+        //Sets the power for each of the wheels
+        leftfront.setPower(frontleftpower);
+        rightfront.setPower(frontrightpower);
+        leftback.setPower(backleftpower);
+        rightback.setPower(backrightpower);
         collector.setPower(collectorpower);
 
         //the code for the motor for the collector

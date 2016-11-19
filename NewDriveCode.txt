@@ -50,9 +50,9 @@ public class DriverControl extends OpMode {
         double backrightpower;
         double frontleftpower;
         double frontrightpower;
-
-
-        if(LeftX < -.8)
+        
+        
+        if(LeftX < -.1)
         {
             //Turn left
             leftfront.setPower(LeftX);
@@ -60,21 +60,21 @@ public class DriverControl extends OpMode {
             leftback.setPower(-LeftX);
             leftback.setPower(-LeftX);
         }
-        else if(LeftX > .8 )
+        else if(LeftX > .1 )
         {
             leftfront.setPower(-LeftX);
             leftback.setPower(-LeftX);
             leftback.setPower(LeftX);
             leftback.setPower(LeftX);
         }
-        else
+        else 
         {
             leftfront.setPower(LeftY);
             leftback.setPower(LeftY);
             rightfront.setPower(LeftY);
-            rightback.setPower(LeftY);
+            rightback.setPower(LeftY); 
         }
-
+        
 
         //the float and the collector power will enable the collector to move forward and backwards
 
@@ -91,7 +91,7 @@ public class DriverControl extends OpMode {
             shooter.setPower(flipperPower);
         }
         else {
-            shooter.setPower(0);
+         shooter.setPower(0);
         }
 
         if(reverseflipper) {
