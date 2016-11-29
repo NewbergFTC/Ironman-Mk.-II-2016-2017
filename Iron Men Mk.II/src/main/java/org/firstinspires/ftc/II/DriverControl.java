@@ -39,10 +39,10 @@ public class DriverControl extends OpMode {
 
     @Override
     public void loop() {
-        float LeftY = gamepad1.left_stick_y;    //Gets value for the x from the controller
-        //float RightY = gamepad1.right_stick_y;
-        float LeftX = gamepad1.left_stick_x;
-        //float RightX = gamepad1.right_stick_x;
+        float forwardpower = gamepad1.left_stick_y;    //Gets value for the left stick y from the controller
+        float RightY = gamepad1.right_stick_y;
+        float turningpower = gamepad1.left_stick_x;
+        float RightX = gamepad1.right_stick_x;
         //Gets values for the y from the controller
 
         //values for the power for each wheel---These values can be played around with
@@ -52,28 +52,26 @@ public class DriverControl extends OpMode {
         double frontrightpower;
 
 
-        if(LeftX < -.8)
+        if(turningpower < -.3)
         {
             //Turn left
-            leftfront.setPower(LeftX);
-            leftback.setPower(LeftX);
-            rightfront.setPower(-LeftX);
-            rightback.setPower(-LeftX);
+            leftfront.setPower(turningpower);
+            leftback.setPower(turningpower);
+            rightfront.setPower(-turningpower);
+            rightback.setPower(-turningpower);
         }
-        else if(LeftX > .8 )
+        else if(turningpower > .3 )
         {
-            leftfront.setPower(-LeftX);
-            leftback.setPower(-LeftX);
-            rightfront.setPower(LeftX);
-            rightback.setPower(LeftX);
+            leftfront.setPower(-turningpower);
+            leftback.setPower(-turningpower);
+            rightfront.setPower(turningpower);
+            rightback.setPower(turningpower);
         }
-        else
-        {
-            leftfront.setPower(LeftY);
-            leftback.setPower(LeftY);
-            rightfront.setPower(LeftY);
-            rightback.setPower(LeftY);
-        }
+
+            leftfront.setPower(forwardpower);
+            leftback.setPower(forwardpower);
+            rightfront.setPower(forwardpower);
+            rightback.setPower(forwardpower);
 
 
         //the float and the collector power will enable the collector to move forward and backwards
