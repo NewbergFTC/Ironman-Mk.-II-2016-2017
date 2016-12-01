@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public abstract class EncoderTest extends EncoderOpMode {
 
-    private DcMotor leftfront= null;
-    private DcMotor rightfront = null;
+    private DcMotor leftfront;
+    private DcMotor rightfront;
 
     //the .setTargetPosition()reads the amount of clicks the encoders goes by. I used the top equation to get this value
 
@@ -35,11 +35,10 @@ public abstract class EncoderTest extends EncoderOpMode {
 
         waitForStart();
 
-        DriveForwardDistance(0.5,2600);
+        DriveForwardDistance(0.5,10000);
+
+        TurnRight(0.5);
     }
-
-
-
 }
 
 

@@ -9,9 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
  abstract public class EncoderOpMode extends LinearOpMode {
 
-    public DcMotor leftfront;
-    public DcMotor rightfront;
-
+    private DcMotor leftfront;
+     private DcMotor rightfront;
 
     public void DriveForward(double power)
     {
@@ -22,12 +21,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
     {
         DriveForward(0);
     }
-    public void TurnLeft(double power)
+
+
+    public void TurnLeft(double power) throws InterruptedException
     {
         leftfront.setPower(-power);
         rightfront.setPower(power);
+        wait(150);
+        leftfront.setPower(0);
+        rightfront.setPower(0);
     }
-    public void TurnRight(double power)
+    public void TurnRight(double power) throws InterruptedException
     {
         TurnLeft(-power);
     }
@@ -38,8 +42,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
     public void DriveForwardDistance(double power, int distance)
     {
-        leftfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        rightfront.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        leftfront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightfront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         rightfront.setTargetPosition(distance); //sets the Target position for the motors
         leftfront.setTargetPosition(distance);
@@ -55,6 +59,5 @@ import com.qualcomm.robotcore.hardware.DcMotor;
             //while the robot is going to the postion the encoders wont get any info
         }
         StopDriving();
-
     }
 }
