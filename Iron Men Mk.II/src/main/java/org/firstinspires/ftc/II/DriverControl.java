@@ -12,9 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class DriverControl extends OpMode {
 
     //Initializes the motors
-    private DcMotor leftfront;
-    private DcMotor leftback;
-    private DcMotor rightfront;
+    private DcMotor leftback;;
     private DcMotor rightback;
     private DcMotor collector;
     private DcMotor shooter;
@@ -24,10 +22,9 @@ public class DriverControl extends OpMode {
     //final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
     //final double DISTANCE= 25;
 
-    public void init() {         //The motors will be called this for the phone configuration
-        leftfront = hardwareMap.dcMotor.get("lf");
+    public void init()
+    {         //The motors will be called this for the phone configuration
         leftback = hardwareMap.dcMotor.get("lb");
-        rightfront = hardwareMap.dcMotor.get("rf");
         rightback = hardwareMap.dcMotor.get("rb");
         collector = hardwareMap.dcMotor.get("cl");
         shooter = hardwareMap.dcMotor.get("shoot");
@@ -50,18 +47,16 @@ public class DriverControl extends OpMode {
         double frontrightpower;
         */
 
-        if (gamepad1.right_trigger > 0)
+        if (gamepad1.right_trigger > 0) //using the right trigger on gamepad.1 to accelerate
         {
             forward = 1;
         }
-        else if (gamepad1.left_trigger > 0)
+        else if (gamepad1.left_trigger > 0) //using the left trigger to go backwards
         {
             forward = -1;
         }
 
-        leftfront.setPower(forward);
-        leftback.setPower(forward);
-        rightfront.setPower(forward);
+        leftback.setPower(forward); //sets the power to the two motors. Gets the forward power from the if statement above
         rightback.setPower(forward);
 
 
@@ -72,16 +67,12 @@ public class DriverControl extends OpMode {
             if (turningpower < 0)
             {
                 //Turn left
-                leftfront.setPower(turningpower);
                 leftback.setPower(turningpower);
-                rightfront.setPower(-turningpower);
                 rightback.setPower(-turningpower);
             }
             else if (turningpower > 0)
             {
-                leftfront.setPower(-turningpower);
                 leftback.setPower(-turningpower);
-                rightfront.setPower(turningpower);
                 rightback.setPower(turningpower);
             }
         }
@@ -90,17 +81,13 @@ public class DriverControl extends OpMode {
             if (turningpower < 0)
             {
             //Turn left
-            leftfront.setPower(-turningpower*.5*forward); //slow down the left wheels to turn left more slowly
-            leftback.setPower(-turningpower*.5*forward);
-            rightfront.setPower(-turningpower*forward);
+            leftback.setPower(-turningpower*.25*forward);//slow down the left wheels to turn left more slowly
             rightback.setPower(-turningpower*forward);
-        }
+            }
             else if (turningpower > 0)
             {
-            leftfront.setPower(turningpower*forward);
-            leftback.setPower(turningpower*forward);
-            rightfront.setPower(turningpower*.5*forward); //slow down the right wheels to turn right more slowly
-            rightback.setPower(turningpower*.5*forward);
+            leftback.setPower(turningpower*forward); //slow down the right wheels to turn right more slowly
+            rightback.setPower(turningpower*.25*forward);
             }
 
         }
@@ -130,9 +117,7 @@ public class DriverControl extends OpMode {
         else{
             shooter.setPower(0);
         }
-
-        //Sets the power for the collector
-        collector.setPower(collectorpower);
+        collector.setPower(collectorpower);   //Sets the power for the collector
 
     }
 }
