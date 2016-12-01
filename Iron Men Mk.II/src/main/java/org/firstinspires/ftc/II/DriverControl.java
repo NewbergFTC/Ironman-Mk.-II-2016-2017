@@ -21,7 +21,6 @@ public class DriverControl extends OpMode {
 
     //Math for the encoder values
     //final double GEAR_ONE_TEETH= 16;
-    //final double GEAR_TWO_TEETH= 32 ;
     //final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
     //final double DISTANCE= 25;
 
@@ -32,64 +31,97 @@ public class DriverControl extends OpMode {
         rightback = hardwareMap.dcMotor.get("rb");
         collector = hardwareMap.dcMotor.get("cl");
         shooter = hardwareMap.dcMotor.get("shoot");
-        //rightfront.setDirection(DcMotor.Direction.REVERSE);
+        leftback.setDirection(DcMotor.Direction.REVERSE);
         shooter.setDirection((DcMotor.Direction.REVERSE));
         // the wheel is REVERSED
     }
 
     @Override
     public void loop() {
-        float forwardpower = gamepad1.left_stick_y;    //Gets value for the left stick y from the controller
-        float RightY = gamepad1.right_stick_y;
+         //Gets value for the left stick y from the controller
         float turningpower = gamepad1.left_stick_x;
-        float RightX = gamepad1.right_stick_x;
-        //Gets values for the y from the controller
+        float forward= 0;
 
+        /*
         //values for the power for each wheel---These values can be played around with
         double backleftpower;
         double backrightpower;
         double frontleftpower;
         double frontrightpower;
+        */
 
-
-        if(turningpower < -.3)
+        if (gamepad1.right_trigger > 0)
         {
+            forward = 1;
+        }
+        else if (gamepad1.left_trigger > 0)
+        {
+            forward = -1;
+        }
+
+        leftfront.setPower(forward);
+        leftback.setPower(forward);
+        rightfront.setPower(forward);
+        rightback.setPower(forward);
+
+
+
+        if (forward == 0 ) //only turning in place
+
+        {
+            if (turningpower < 0)
+            {
+                //Turn left
+                leftfront.setPower(turningpower);
+                leftback.setPower(turningpower);
+                rightfront.setPower(-turningpower);
+                rightback.setPower(-turningpower);
+            }
+            else if (turningpower > 0)
+            {
+                leftfront.setPower(-turningpower);
+                leftback.setPower(-turningpower);
+                rightfront.setPower(turningpower);
+                rightback.setPower(turningpower);
+            }
+        }
+        else //this is moving forward and turning
+        {
+            if (turningpower < 0)
+            {
             //Turn left
-            leftfront.setPower(turningpower);
-            leftback.setPower(turningpower);
-            rightfront.setPower(-turningpower);
-            rightback.setPower(-turningpower);
+            leftfront.setPower(-turningpower*.5*forward); //slow down the left wheels to turn left more slowly
+            leftback.setPower(-turningpower*.5*forward);
+            rightfront.setPower(-turningpower*forward);
+            rightback.setPower(-turningpower*forward);
         }
-        else if(turningpower > .3 )
-        {
-            leftfront.setPower(-turningpower);
-            leftback.setPower(-turningpower);
-            rightfront.setPower(turningpower);
-            rightback.setPower(turningpower);
+            else if (turningpower > 0)
+            {
+            leftfront.setPower(turningpower*forward);
+            leftback.setPower(turningpower*forward);
+            rightfront.setPower(turningpower*.5*forward); //slow down the right wheels to turn right more slowly
+            rightback.setPower(turningpower*.5*forward);
+            }
+
         }
-
-            leftfront.setPower(forwardpower);
-            leftback.setPower(forwardpower);
-            rightfront.setPower(forwardpower);
-            rightback.setPower(forwardpower);
-
 
         //the float and the collector power will enable the collector to move forward and backwards
 
         float PowerForward = (float) 1;
-        float PowerBack = (float) 1;
-        float collectorpower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0;
+        float PowerBack = (float) -1;
+        float collectorpower = (gamepad2.left_trigger >= 1) ? PowerForward : (gamepad2.right_trigger >= 1) ? PowerBack : 0;
         float flipperPower = 1f;
         float reversepowerflipper = -1f;
 
-        boolean buttonflipper = gamepad1.a;
-        boolean reverseflipper =gamepad1.b;
+        boolean buttonflipper = gamepad2.a;
+        boolean reverseflipper = gamepad2.b;
 
-        if (buttonflipper) {
+
+        if (buttonflipper) {    //if the gamepad a button is pressed it will set the power to the motor
             shooter.setPower(flipperPower);
         }
         else {
-            shooter.setPower(0);
+            shooter.setPower(0); //if the a button is not being it will
         }
 
         if(reverseflipper) {
@@ -99,12 +131,8 @@ public class DriverControl extends OpMode {
             shooter.setPower(0);
         }
 
-        //values for the power for each wheel---These values can be played around with
-
-
         //Sets the power for the collector
         collector.setPower(collectorpower);
 
-        //the code for the motor for the collector
     }
 }
