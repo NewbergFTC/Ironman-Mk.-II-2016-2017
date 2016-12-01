@@ -28,7 +28,7 @@ public class DriverControl extends OpMode {
         rightback = hardwareMap.dcMotor.get("rb");
         collector = hardwareMap.dcMotor.get("cl");
         shooter = hardwareMap.dcMotor.get("shoot");
-        leftback.setDirection(DcMotor.Direction.REVERSE);
+        rightback.setDirection(DcMotor.Direction.REVERSE);
         shooter.setDirection((DcMotor.Direction.REVERSE));
         // the wheel is REVERSED
     }
@@ -81,13 +81,13 @@ public class DriverControl extends OpMode {
             if (turningpower < 0)
             {
             //Turn left
-            leftback.setPower(-turningpower*.25*forward);//slow down the left wheels to turn left more slowly
+            leftback.setPower(-turningpower*.5*forward);//slow down the left wheels to turn left more slowly
             rightback.setPower(-turningpower*forward);
             }
             else if (turningpower > 0)
             {
             leftback.setPower(turningpower*forward); //slow down the right wheels to turn right more slowly
-            rightback.setPower(turningpower*.25*forward);
+            rightback.setPower(turningpower*.5*forward);
             }
 
         }

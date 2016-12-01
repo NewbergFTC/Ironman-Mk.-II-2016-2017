@@ -9,13 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
  abstract public class EncoderOpMode extends LinearOpMode {
 
-    private DcMotor leftfront;
-     private DcMotor rightfront;
+     private DcMotor leftback = null;
+     private DcMotor rightback = null;
 
     public void DriveForward(double power)
     {
-        leftfront.setPower(power);
-        rightfront.setPower(power);
+        leftback.setPower(power);
+        rightback.setPower(power);
     }
     public void StopDriving()
     {
@@ -25,11 +25,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
     public void TurnLeft(double power) throws InterruptedException
     {
-        leftfront.setPower(-power);
-        rightfront.setPower(power);
+        leftback.setPower(-power);
+        rightback.setPower(power);
         wait(150);
-        leftfront.setPower(0);
-        rightfront.setPower(0);
+        leftback.setPower(0);
+        rightback.setPower(0);
     }
     public void TurnRight(double power) throws InterruptedException
     {
@@ -42,19 +42,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
     public void DriveForwardDistance(double power, int distance)
     {
-        leftfront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightfront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        rightfront.setTargetPosition(distance); //sets the Target position for the motors
-        leftfront.setTargetPosition(distance);
+        rightback.setTargetPosition(distance); //sets the Target position for the motors
+        leftback.setTargetPosition(distance);
 
-        rightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
-        leftfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
+        leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftfront.setPower(power);         //sets the power to the Target value.
-        rightfront.setPower(power);
+        leftback.setPower(power);         //sets the power to the Target value.
+        rightback.setPower(power);
 
-        while (leftfront.isBusy() && rightfront.isBusy())
+        while (leftback.isBusy() && rightback.isBusy())
         {
             //while the robot is going to the postion the encoders wont get any info
         }

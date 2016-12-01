@@ -11,22 +11,22 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public abstract class EncoderTest extends EncoderOpMode {
 
-    private DcMotor leftfront;
-    private DcMotor rightfront;
+    private DcMotor leftback;
+    private DcMotor rightback;
 
     //the .setTargetPosition()reads the amount of clicks the encoders goes by. I used the top equation to get this value
 
     public void Init()
     {
         //Initializes the configuration for the         rightfront = hardwareMap.dcMotor.get("rf");
-        leftfront = hardwareMap.dcMotor.get("lf");
-        rightfront = hardwareMap.dcMotor.get("rf");
+        leftback = hardwareMap.dcMotor.get("lb");
+        rightback = hardwareMap.dcMotor.get("rb");
 
 
-        rightfront.setDirection(DcMotor.Direction.REVERSE); //Reverses the motors
+        rightback.setDirection(DcMotor.Direction.REVERSE); //Reverses the right back motors
 
-        rightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);  //Sets up the robot ready for encoder use
-        leftfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);  //Sets up the robot ready for encoder use
+        leftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
     public void runOpMode() throws InterruptedException
