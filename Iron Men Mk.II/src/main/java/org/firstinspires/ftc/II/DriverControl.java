@@ -1,69 +1,67 @@
 package org.firstinspires.ftc.II;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-/**
+/*
  * Created by Marcos on 10/4/2016.
  */
 @TeleOp(name = "Driver Control")
 public class DriverControl extends OpMode {
 
-    //Initializes the motors
-    private DcMotor leftback;;
+    //Calls the motor to be used later on in the code. Right now we have 6 motors used.
+    private DcMotor leftback;
     private DcMotor rightback;
     private DcMotor collector;
     private DcMotor rightfront;
     private DcMotor leftfront;
     private DcMotor shooter;
 
-    //Math for the encoder values
-    //final double GEAR_ONE_TEETH= 16;
-    //final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
-    //final double DISTANCE= 25;
-
-    public void init()
-    {         //The motors will be called this for the phone configuration
-        leftback = hardwareMap.dcMotor.get("lb");
-        rightback = hardwareMap.dcMotor.get("rb");
+    public void init() //The motors will be initialized in this section of the code
+    {
+        leftback = hardwareMap.dcMotor.get("lb"); //Here the hardware is being mapped out by the code. This is also were you determine what names you will enter to the phone configuration to call that motor
+        rightback = hardwareMap.dcMotor.get("rb");// The right back motor is called "rb" in the phone configuration. To call the right back motor enter "rb" to whichever motor controller and motor port on the motor controller the motor is connected
         leftfront = hardwareMap.dcMotor.get("lf");
         rightfront = hardwareMap.dcMotor.get("rf");
 
         collector = hardwareMap.dcMotor.get("cl");
         shooter = hardwareMap.dcMotor.get("shoot");
-        shooter.setDirection((DcMotor.Direction.REVERSE));
-        // the wheel is REVERSED
+        shooter.setDirection((DcMotor.Direction.REVERSE)); // This line of code reverses the motor direction. You would use this if you want the motor to be the same as the others in direction.
+        // the motor is REVERSED as we need to collector to spin to the right not to the left
     }
 
     @Override
-    public void loop() {
+    public void loop() { //The robot is going to run this segment of code over and over allowing something to be 1 for a while and a zero at another time
 
-        double leftpower = -gamepad1.left_stick_y*.75;
-        double rightpower = gamepad1.right_stick_y*.75;
-        double PowerForward = 1f;
-        double PowerBack = -1f;
+        //The code is setting power values for the motors on the wheels
+        double leftpower = -gamepad1.left_stick_y*.75; //the left two motors are getting a negative value to go the same direction as the right motors
+        double rightpower = gamepad1.right_stick_y*.75; // Testing our code some of our wheels were jerky and choppy. We fixed this by  multiplying 75% of the value the controller gives. This slows down the wheels by 25%
 
-        double collectorPower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0;
-        boolean buttonflipper = gamepad1.a;
+        //The collector is using the left and right triggers to set the power to the collector motor
+        double PowerForward = 1f; //This is the power if the motor is needed to go forward
+        double PowerBack = -1f; //This is the power if the motor is needed to go backwards
+        double collectorpower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0; //This line of code determines what trigger is being pressed.  Left or right and setting the collector power to whichever button is being pressed
 
-        leftfront.setPower(leftpower);
-        leftback.setPower(leftpower);
-        rightfront.setPower(rightpower);
-        rightback.setPower(rightpower);
-        collector.setPower(collectorPower);
+        boolean buttonflipper = gamepad1.a; //A boolean is a true and false. The game pad has most functions as booleans.
 
-        if(buttonflipper)
+        //This fragment of code sets the power to the motors from previous lines of code
+        leftfront.setPower(leftpower); //The "leftpower" from above is used here to set the power to the left front wheel
+        leftback.setPower(leftpower); //The "leftpower" from above is used here to set the power to the left back wheel
+        rightfront.setPower(rightpower); //The "rightpower" from above is used here to set the power to the right front wheel
+        rightback.setPower(rightpower); //The "rightpower" from above is used here to set the power to the right back wheel
+        collector.setPower(collectorpower); //The "collectorpower" is  either 1 or -1. The code from above determines this. The collector motor is given a value here
+
+        if(buttonflipper) //if the first game pad a button is pressed then it will do the code in the brackets
         {
-          shooter.setPower(1);
+          shooter.setPower(1);//This sets the shooter to 1 if the a button is being pressed
         }
-        else
+        else //if the first game pas a button is not being pressed it will do the code in the brackets. It will not the code in the if statement above
         {
-         shooter.setPower(0);
+         shooter.setPower(0); // The motor is set to zero power most of the time since the a button is not being pressed constantly.
         }
         /*
+        //this is some variation of the drive code. Our driver enjoyed the tank drive more then an a video game influenced driving style
         float turningPower = gamepad1.left_stick_x;  //Gets value for the left stick y from the controller
         float forward= 0;
 
