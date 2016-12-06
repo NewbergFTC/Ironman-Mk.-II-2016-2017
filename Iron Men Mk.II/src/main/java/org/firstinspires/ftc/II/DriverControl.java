@@ -41,8 +41,8 @@ public class DriverControl extends OpMode {
     @Override
     public void loop() {
 
-        float leftpower = -gamepad1.left_stick_y;
-        float rightpower = gamepad1.right_stick_y;
+        double leftpower = -gamepad1.left_stick_y*.75;
+        double rightpower = gamepad1.right_stick_y*.75;
         double PowerForward = 1f;
         double PowerBack = -1f;
 
