@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 @Autonomous(name = "Encoder Test")
 
-public abstract class EncoderTest extends EncoderOpMode {
+public abstract class EncoderTest extends BlueAutonomousMode {
 
     private DcMotor leftback;
     private DcMotor rightback;
@@ -18,7 +18,7 @@ public abstract class EncoderTest extends EncoderOpMode {
 
     public void Init()
     {
-        //Initializes the configuration for the         rightfront = hardwareMap.dcMotor.get("rf");
+        //Initializes the configuration for the rightfront = hardwareMap.dcMotor.get("rf");
         leftback = hardwareMap.dcMotor.get("lb");
         rightback = hardwareMap.dcMotor.get("rb");
 
@@ -35,9 +35,14 @@ public abstract class EncoderTest extends EncoderOpMode {
 
         waitForStart();
 
-        DriveForwardDistance(0.5,10000);
+        DriveForwardDistance(0,5520);
 
         TurnRight(0.5);
+
+        DriveForwardDistance(0.5,920);
+
+        getRedSide();
+
     }
 }
 

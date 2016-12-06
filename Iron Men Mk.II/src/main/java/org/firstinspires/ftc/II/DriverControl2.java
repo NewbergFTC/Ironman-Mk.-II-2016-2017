@@ -25,7 +25,8 @@ public class DriverControl2 extends OpMode {
     //final double WHEEL_CIRCUMFERENCE= 3.875*Math.PI;
     //final double DISTANCE= 25;
 
-    public void init() {         //The motors will be called this for the phone configuration
+    public void init()
+    {         //The motors will be called this for the phone configuration
         leftfront = hardwareMap.dcMotor.get("lf");
         leftback = hardwareMap.dcMotor.get("lb");
         rightfront = hardwareMap.dcMotor.get("rf");

@@ -11,11 +11,10 @@ import org.lasarobotics.vision.ftc.resq.Beacon;
 @Autonomous (name= "BlueAutonomous")
 public class BlueAutonomousMode extends IIOpMode
 {
-
-    private int BlueRightSide() throws InterruptedException
+    public int getRedSide() throws InterruptedException
     {
         int results = 0;
-        long Timeslept = 0;
+        long TimeSlept = 0;
 
         while(opModeIsActive())
         {
@@ -23,20 +22,20 @@ public class BlueAutonomousMode extends IIOpMode
             {
                 Beacon.BeaconAnalysis beaconAnalysis = beacon.getAnalysis();
 
-                results = beaconAnalysis.isRightBlue() ? 1 : 0;
+                results = beaconAnalysis.isRightRed() ? 1 : 0;
 
                 break;
             }
             else
             {
-                if(Timeslept > 10000)
+                if(TimeSlept > 10000)
                 {
                     results = -1;
 
                     break;
                 }
 
-                Timeslept += 10;
+                TimeSlept += 10;
                 sleep(10);
             }
 
