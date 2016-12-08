@@ -1,47 +1,37 @@
 package org.firstinspires.ftc.II;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.lasarobotics.vision.ftc.resq.Beacon;
-
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
- * Created by Marcos on 11/28/2016.
+ * Created by Marcos on 10/19/2016.
  */
-@Autonomous (name= "BlueAutonomous")
-public class BlueAutonomousMode extends IIOpMode
-{
-    public int getRedSide() throws InterruptedException
+@Autonomous(name = "Blue Autonomous")
+
+public class BlueAutonomousMode extends IIOpMode {
+
+    private DcMotor leftback;
+    private DcMotor rightback;
+
+    //the .setTargetPosition()reads the amount of clicks the encoders goes by. I used the top equation to get this value
+
+    public void Run() throws InterruptedException
     {
-        int results = 0;
-        long TimeSlept = 0;
+        Init();
 
-        while(opModeIsActive())
-        {
-            if(hasNewFrame())
-            {
-                Beacon.BeaconAnalysis beaconAnalysis = beacon.getAnalysis();
+        waitForStart();
 
-                results = beaconAnalysis.isRightRed() ? 1 : 0;
+        DriveForwardDistance(0.5,5520);
 
-                break;
-            }
-            else
-            {
-                if(TimeSlept > 10000)
-                {
-                    results = -1;
+        TurnRight(0.5);
 
-                    break;
-                }
+        DriveForwardDistance(0.5,920);
 
-                TimeSlept += 10;
-                sleep(10);
-            }
+        getBlueRightSide();
 
-            Update();
-        }
-
-        return results;
     }
 }
+
+
+
