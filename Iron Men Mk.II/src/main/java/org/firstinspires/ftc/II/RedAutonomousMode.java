@@ -16,9 +16,11 @@ public class RedAutonomousMode extends IIOpMode {
 
         waitForStart();
 
-        DriveForwardDistance(-0.5,920);
+        DriveForwardDistance(0.5,5520);
 
         TurnLeft(0.5);
+
+        DriveForwardDistance(0.5,920);
 
         getBlueRightSide();
     }

@@ -11,11 +11,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class BlueAutonomousMode extends IIOpMode {
 
-    private DcMotor leftback;
-    private DcMotor rightback;
-
-    //the .setTargetPosition()reads the amount of clicks the encoders goes by. I used the top equation to get this value
-
     public void Run() throws InterruptedException
     {
         Init();
