@@ -9,14 +9,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 @Autonomous(name = "Blue Autonomous")
 
-public class BlueAutonomousMode extends IIOpMode {
+public class BlueAutonomousMode extends IIOpMode
+
+    {
+        @Override
+        public void Init(){
+            super.Init();
+        }
 
     public void Run() throws InterruptedException
     {
-        Init();
-
-        waitForStart();
-
         DriveForwardDistance(0.5,5520);
 
         TurnRight(0.5);
