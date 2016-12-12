@@ -26,7 +26,7 @@ public class DriverControl extends OpMode {
         rightfront = hardwareMap.dcMotor.get("rf");
 
         collector = hardwareMap.dcMotor.get("cl");
-        shooter = hardwareMap.dcMotor.get("shoot");
+        shooter = hardwareMap.dcMotor.get("sh");
         shooter.setDirection((DcMotor.Direction.REVERSE)); // This line of code reverses the motor direction. You would use this if you want the motor to be the same as the others in direction.
         // the motor is REVERSED as we need to collector to spin to the right not to the left
     }
