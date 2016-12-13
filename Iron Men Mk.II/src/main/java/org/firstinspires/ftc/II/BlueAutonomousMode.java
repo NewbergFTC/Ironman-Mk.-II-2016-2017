@@ -27,8 +27,23 @@ public class BlueAutonomousMode extends IIOpMode
         DriveForwardDistance(0.5,920);
 
         getBlueRightSide();
-
     }
+    /* This is another way of calling the autonomous program. If the top one does not work.
+    waitForStart();
+
+    while (opModeIsActive())
+    {
+
+
+    DriveForwardDistance(0.5,5520);
+
+    TurnLeft(0.5);
+
+    DriveForwardDistance(0.5,920);
+
+    getBlueRightSide();
+    }
+    */
 }
 
 

@@ -39,7 +39,7 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         rightback = hardwareMap.dcMotor.get("rb");
 
 
-        rightback.setDirection(DcMotor.Direction.REVERSE); //Reverses the right back motors
+        leftback.setDirection(DcMotor.Direction.REVERSE); //Reverses the left back motor
 
         rightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);  //Sets up the robot ready for encoder use
         leftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
