@@ -10,10 +10,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class RedAutonomousMode extends IIOpMode {
 
+    @Override
+    public void Init()
+    {
+        super.Init();
+    }
+
     public void Run() throws InterruptedException
     {
-        Init();
-
         DriveForwardDistance(0.5,5520);
 
         TurnLeft(0.5);

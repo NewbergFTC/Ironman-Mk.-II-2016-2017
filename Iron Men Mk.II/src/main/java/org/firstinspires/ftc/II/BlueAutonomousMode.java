@@ -11,9 +11,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class BlueAutonomousMode extends IIOpMode
 
-    {
+{
         @Override
-        public void Init(){
+        public void Init()
+        {
             super.Init();
         }
 
