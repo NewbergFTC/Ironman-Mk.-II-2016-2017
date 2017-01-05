@@ -20,13 +20,10 @@ public class BlueAutonomousMode extends IIOpMode
 
     public void Run() throws InterruptedException
     {
+        Update();
+
         DriveForwardDistance(0.5,5520);
 
-        TurnRight(0.5);
-
-        DriveForwardDistance(0.5,920);
-
-        getBlueRightSide();
     }
     /* This is another way of calling the autonomous program. If the top one does not work.
     waitForStart();
