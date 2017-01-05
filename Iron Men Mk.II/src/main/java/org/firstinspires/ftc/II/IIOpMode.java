@@ -52,7 +52,8 @@ public abstract class IIOpMode extends LinearVisionOpMode {
     }
     public void StopDriving()
     {
-        DriveForward(0);
+        leftback.setPower(0);
+        rightback.setPower(0);
     }
 
 
@@ -71,6 +72,7 @@ public abstract class IIOpMode extends LinearVisionOpMode {
     public  void Reverse (double power) throws InterruptedException
     {
         leftback.setPower(-power);
+
         rightback.setPower(power);
         wait(500);
         leftback.setPower(0);
@@ -82,8 +84,11 @@ public abstract class IIOpMode extends LinearVisionOpMode {
 
     public void DriveForwardDistance(double power, int distance)
     {
-        rightback.setTargetPosition(distance); //sets the Target position for the motors
-        leftback.setTargetPosition(distance);
+        int RightValue = rightback.getCurrentPosition();
+        int LeftValue = leftback.getCurrentPosition();
+
+        rightback.setTargetPosition(distance + RightValue); //sets the Target position for the motors
+        leftback.setTargetPosition(distance + LeftValue);
 
         rightback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
         leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -91,10 +96,16 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         leftback.setPower(power);         //sets the power to the Target value.
         rightback.setPower(power);
 
-        while (leftback.isBusy() && rightback.isBusy())
+        while (Math.abs(rightback.getCurrentPosition()) < distance)
         {
+            telemetry.addData("Right", Math.abs(rightback.getCurrentPosition()));
+            telemetry.addData("Left", Math.abs(rightback.getCurrentPosition()));
+            telemetry.addData("Left & Right Goal",distance);
+            telemetry.update();
             //while the robot is going to the postion the encoders wont get any info
         }
+        leftback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         StopDriving();
     }
     public void runOpMode() throws InterruptedException
@@ -172,4 +183,3 @@ public abstract class IIOpMode extends LinearVisionOpMode {
     }
    abstract public void Run() throws InterruptedException;
 }
-//test

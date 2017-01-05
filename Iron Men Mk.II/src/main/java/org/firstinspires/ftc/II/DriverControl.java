@@ -32,18 +32,19 @@ public class DriverControl extends OpMode {
     }
 
     @Override
-    public void loop() { //The robot is going to run this segment of code over and over allowing something to be 1 for a while and a zero at another time
+    public void loop()
+    { //The robot is going to run this segment of code over and over allowing something to be 1 for a while and a zero at another time
 
         //The code is setting power values for the motors on the wheels
-        double leftpower = -gamepad1.left_stick_y*.75; //the left two motors are getting a negative value to go the same direction as the right motors
-        double rightpower = gamepad1.right_stick_y*.75; // Testing our code some of our wheels were jerky and choppy. We fixed this by  multiplying 75% of the value the controller gives. This slows down the wheels by 25%
+        double leftpower = -gamepad1.left_stick_y*.50; //the left two motors are getting a negative value to go the same direction as the right motors
+        double rightpower = gamepad1.right_stick_y*.50; // Testing our code some of our wheels were jerky and choppy. We fixed this by  multiplying 75% of the value the controller gives. This slows down the wheels by 25%
 
         //The collector is using the left and right triggers to set the power to the collector motor
         double PowerForward = 1f; //This is the power if the motor is needed to go forward
         double PowerBack = -1f; //This is the power if the motor is needed to go backwards
         double collectorpower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0; //This line of code determines what trigger is being pressed.  Left or right and setting the collector power to whichever button is being pressed
 
-        boolean buttonflipper = gamepad1.a; //A boolean is a true and false. The game pad has most functions as booleans.
+        boolean flipperB = gamepad1.b; //A boolean is a true and false. The game pad has most functions as booleans.
 
         //This fragment of code sets the power to the motors from previous lines of code
         leftfront.setPower(leftpower); //The "leftpower" from above is used here to set the power to the left front wheel
@@ -52,13 +53,13 @@ public class DriverControl extends OpMode {
         rightback.setPower(rightpower); //The "rightpower" from above is used here to set the power to the right back wheel
         collector.setPower(collectorpower); //The "collectorpower" is  either 1 or -1. The code from above determines this. The collector motor is given a value here
 
-        if(buttonflipper) //if the first game pad a button is pressed then it will do the code in the brackets
+        if(flipperB)
         {
-          shooter.setPower(1);//This sets the shooter to 1 if the a button is being pressed
+            shooter.setPower(-1);
         }
-        else //if the first game pas a button is not being pressed it will do the code in the brackets. It will not the code in the if statement above
+        else
         {
-         shooter.setPower(0); // The motor is set to zero power most of the time since the a button is not being pressed constantly.
+            shooter.setPower(0);
         }
         /*
         //this is some variation of the drive code. Our driver enjoyed the tank drive more then an a video game influenced driving style
