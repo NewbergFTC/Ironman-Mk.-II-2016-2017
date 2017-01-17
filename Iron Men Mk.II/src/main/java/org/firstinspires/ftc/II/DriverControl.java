@@ -3,6 +3,7 @@ package org.firstinspires.ftc.II;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * Created by Marcos on 10/4/2016.
@@ -17,6 +18,8 @@ public class DriverControl extends OpMode {
     private DcMotor rightfront;
     private DcMotor leftfront;
     private DcMotor shooter;
+    private Servo ballHolder1;
+    private Servo ballHolder2;
 
     public void init() //The motors will be initialized in this section of the code
     {
@@ -24,6 +27,9 @@ public class DriverControl extends OpMode {
         rightback = hardwareMap.dcMotor.get("rb");// The right back motor is called "rb" in the phone configuration. To call the right back motor enter "rb" to whichever motor controller and motor port on the motor controller the motor is connected
         leftfront = hardwareMap.dcMotor.get("lf");
         rightfront = hardwareMap.dcMotor.get("rf");
+        ballHolder1 = hardwareMap.servo.get("bh1");
+        ballHolder2 = hardwareMap.servo.get("bh2");
+
 
         collector = hardwareMap.dcMotor.get("cl");
         shooter = hardwareMap.dcMotor.get("sh");
@@ -36,8 +42,8 @@ public class DriverControl extends OpMode {
     { //The robot is going to run this segment of code over and over allowing something to be 1 for a while and a zero at another time
 
         //The code is setting power values for the motors on the wheels
-        double leftpower = -gamepad1.left_stick_y*.50; //the left two motors are getting a negative value to go the same direction as the right motors
-        double rightpower = gamepad1.right_stick_y*.50; // Testing our code some of our wheels were jerky and choppy. We fixed this by  multiplying 75% of the value the controller gives. This slows down the wheels by 25%
+        double leftpower = -gamepad1.left_stick_y; //the left two motors are getting a negative value to go the same direction as the right motors
+        double rightpower = gamepad1.right_stick_y; // Testing our code some of our wheels were jerky and choppy. We fixed this by  multiplying 75% of the value the controller gives. This slows down the wheels by 25%
 
         //The collector is using the left and right triggers to set the power to the collector motor
         double PowerForward = 1f; //This is the power if the motor is needed to go forward
@@ -53,9 +59,19 @@ public class DriverControl extends OpMode {
         rightback.setPower(rightpower); //The "rightpower" from above is used here to set the power to the right back wheel
         collector.setPower(collectorpower); //The "collectorpower" is  either 1 or -1. The code from above determines this. The collector motor is given a value here
 
+        if(gamepad1.a)
+       {
+           ballHolder1.setPosition(100);
+           ballHolder2.setPosition(100);
+       }
+        else
+       {
+           ballHolder1.setPosition(0);
+           ballHolder2.setPosition(0);
+       }
         if(flipperB)
         {
-            shooter.setPower(-1);
+            shooter.setPower(-1f);
         }
         else
         {
