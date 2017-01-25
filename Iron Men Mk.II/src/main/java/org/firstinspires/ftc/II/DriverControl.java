@@ -20,6 +20,7 @@ public class DriverControl extends OpMode {
     private DcMotor shooter;
     private Servo ballHolder1;
     private Servo ballHolder2;
+    double pushing = 0.35;
 
     public void init() //The motors will be initialized in this section of the code
     {
@@ -50,7 +51,7 @@ public class DriverControl extends OpMode {
         double PowerBack = -1f; //This is the power if the motor is needed to go backwards
         double collectorpower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0; //This line of code determines what trigger is being pressed.  Left or right and setting the collector power to whichever button is being pressed
 
-        boolean flipperB = gamepad1.b; //A boolean is a true and false. The game pad has most functions as booleans.
+        boolean flipperB = gamepad2.b; //A boolean is a true and false. The game pad has most functions as booleans.
 
         //This fragment of code sets the power to the motors from previous lines of code
         leftfront.setPower(leftpower); //The "leftpower" from above is used here to set the power to the left front wheel
@@ -59,24 +60,23 @@ public class DriverControl extends OpMode {
         rightback.setPower(rightpower); //The "rightpower" from above is used here to set the power to the right back wheel
         collector.setPower(collectorpower); //The "collectorpower" is  either 1 or -1. The code from above determines this. The collector motor is given a value here
 
-        if(gamepad1.a)
-       {
-           ballHolder1.setPosition(100);
-           ballHolder2.setPosition(100);
-       }
-        else
-       {
-           ballHolder1.setPosition(0);
-           ballHolder2.setPosition(0);
-       }
-        if(flipperB)
+        if(gamepad2.a)
         {
-            shooter.setPower(-1f);
+            ballHolder1.setPosition(1);
         }
+        else
+        {
+            ballHolder1.setPosition(pushing);
+        }
+
+        if(flipperB)
+
+            shooter.setPower(PowerBack);
         else
         {
             shooter.setPower(0);
         }
+
         /*
         //this is some variation of the drive code. Our driver enjoyed the tank drive more then an a video game influenced driving style
         float turningPower = gamepad1.left_stick_x;  //Gets value for the left stick y from the controller

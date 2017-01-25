@@ -21,9 +21,11 @@ public class BlueAutonomousMode extends IIOpMode
     public void Run() throws InterruptedException
 
     {
-        DriveForwardDistance(.6,4200); // Power is set first then is the target in ticks
+        //DriveForwardDistance(.6,4200); // Power is set first then is the target in ticks
 
-        Autonomous_Shoot(1);
+        //Autonomous_Shoot(1);
+
+        Turning(1);
 
         getBlueRightSide();
     }

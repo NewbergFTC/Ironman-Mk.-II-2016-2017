@@ -2,6 +2,7 @@ package org.firstinspires.ftc.II;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -22,6 +23,8 @@ public abstract class IIOpMode extends LinearVisionOpMode {
     DcMotor rightback;
     DcMotor shooter;
     int CLICKS_PER_REVOLUTION = 1120;
+    DcMotor leftfront;
+    DcMotor rightfront;
 
     protected void Clear()
     {
@@ -41,9 +44,12 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         leftback = hardwareMap.dcMotor.get("lb");
         rightback = hardwareMap.dcMotor.get("rb");
         shooter = hardwareMap.dcMotor.get("sh");
+        leftfront = hardwareMap.dcMotor.get("lf");
+        rightfront = hardwareMap.dcMotor.get("rf");
 
 
         leftback.setDirection(DcMotor.Direction.REVERSE); //Reverses the left back motor
+        leftfront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);  //Sets up the robot ready for encoder use
         leftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -78,30 +84,48 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         leftback.setPower(0);
         rightback.setPower(0);
     }
-
-
-    public void TurnRight(double power,int TARGET_DEGREE) throws InterruptedException
+    public void Turning(int Wheel_Rotation) throws InterruptedException
     {
-        int DEGERRE_PER_TICK = 1120/360;
         int RightTurnValue = rightback.getCurrentPosition();
-        int LeftTurnValue = leftback.getCurrentPosition();
-        int TARGET_TURN = DEGERRE_PER_TICK * TARGET_DEGREE;
 
-        leftback.setTargetPosition(DEGERRE_PER_TICK * TARGET_DEGREE + LeftTurnValue);
-        rightback.setTargetPosition(DEGERRE_PER_TICK * TARGET_DEGREE + RightTurnValue);
+        int Turn = 1200 * Wheel_Rotation;
 
-        rightback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
+        leftback.setTargetPosition(Turn + RightTurnValue);
+
+        leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this
+
+        leftback.setPower(-1);
+
         leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftback.setPower(power);
-        rightback.setPower(-power);
-
-        while(Math.abs(rightback.getCurrentPosition()) < TARGET_DEGREE)
+        while(Math.abs(rightback.getCurrentPosition()) < Turn)
         {
-            telemetry.addData("Left Turn Value",leftback.getCurrentPosition());
             telemetry.addData("Right Turn Value",rightback.getCurrentPosition());
-            telemetry.addData("Target", TARGET_DEGREE);
-            //leftback.setPower(power);
+            telemetry.addData("Target", Turn);
+            rightback.setPower(.8);
+            rightfront.setPower(.8);
+            leftfront.setPower(-1);
+            telemetry.update();
+        }
+        StopDriving();
+    }
+
+
+    public void TurnRight(double power,int TARGET_TICK) throws InterruptedException
+    {
+        int RightTurnValue = rightback.getCurrentPosition();
+
+        rightback.setTargetPosition(TARGET_TICK + RightTurnValue);
+
+        rightback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this
+
+        rightback.setPower(power);
+
+        while(Math.abs(rightback.getCurrentPosition()) < TARGET_TICK)
+        {
+            telemetry.addData("Right Turn Value",rightback.getCurrentPosition());
+            telemetry.addData("Target", TARGET_TICK);
+            leftback.setPower(power * .75);
             telemetry.update();
         }
         StopDriving();
