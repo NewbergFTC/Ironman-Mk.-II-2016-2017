@@ -18,9 +18,11 @@ public class DriverControl extends OpMode {
     private DcMotor rightfront;
     private DcMotor leftfront;
     private DcMotor shooter;
+    private DcMotor ballhoop;
     private Servo ballHolder1;
     private Servo ballHolder2;
     double pushing = 0.35;
+    boolean doorDown = false;
 
     public void init() //The motors will be initialized in this section of the code
     {
@@ -30,25 +32,26 @@ public class DriverControl extends OpMode {
         rightfront = hardwareMap.dcMotor.get("rf");
         ballHolder1 = hardwareMap.servo.get("bh1");
         ballHolder2 = hardwareMap.servo.get("bh2");
+        ballhoop = hardwareMap.dcMotor.get("bh");
 
 
         collector = hardwareMap.dcMotor.get("cl");
         shooter = hardwareMap.dcMotor.get("sh");
         shooter.setDirection((DcMotor.Direction.REVERSE)); // This line of code reverses the motor direction. You would use this if you want the motor to be the same as the others in direction.
         // the motor is REVERSED as we need to collector to spin to the right not to the left
+        ballhoop.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
-    public void loop()
-    { //The robot is going to run this segment of code over and over allowing something to be 1 for a while and a zero at another time
+    public void loop() { //The robot is going to run this segment of code over and over allowing something to be 1 for a while and a zero at another time
 
         //The code is setting power values for the motors on the wheels
         double leftpower = -gamepad1.left_stick_y; //the left two motors are getting a negative value to go the same direction as the right motors
         double rightpower = gamepad1.right_stick_y; // Testing our code some of our wheels were jerky and choppy. We fixed this by  multiplying 75% of the value the controller gives. This slows down the wheels by 25%
 
         //The collector is using the left and right triggers to set the power to the collector motor
-        double PowerForward = 1f; //This is the power if the motor is needed to go forward
-        double PowerBack = -1f; //This is the power if the motor is needed to go backwards
+        double PowerForward = 0.9f; //This is the power if the motor is needed to go forward
+        double PowerBack = -0.9; //This is the power if the motor is needed to go backwards
         double collectorpower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0; //This line of code determines what trigger is being pressed.  Left or right and setting the collector power to whichever button is being pressed
 
         boolean flipperB = gamepad2.b; //A boolean is a true and false. The game pad has most functions as booleans.
@@ -60,7 +63,7 @@ public class DriverControl extends OpMode {
         rightback.setPower(rightpower); //The "rightpower" from above is used here to set the power to the right back wheel
         collector.setPower(collectorpower); //The "collectorpower" is  either 1 or -1. The code from above determines this. The collector motor is given a value here
 
-        if(gamepad2.a)
+        if (gamepad2.a)
         {
             ballHolder1.setPosition(1);
         }
@@ -69,12 +72,60 @@ public class DriverControl extends OpMode {
             ballHolder1.setPosition(pushing);
         }
 
-        if(flipperB)
+        if (flipperB)
 
-            shooter.setPower(PowerBack);
-        else
-        {
+            shooter.setPower(-1f);
+        else {
             shooter.setPower(0);
+        }
+
+        int BallHoopValue = ballhoop.getCurrentPosition();
+        int hoop_down = 420;
+        int hoop_up = 420;
+        int targetpostiondown = BallHoopValue + hoop_down;
+        int targetpostionup = BallHoopValue - hoop_up;
+
+        if (gamepad1.x)
+        {
+            if (!doorDown)
+            {
+                ballhoop.setTargetPosition(targetpostiondown);
+                ballhoop.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                ballhoop.setPower(0.2);
+//                while (ballhoop.isBusy())
+//                {
+//                    ballhoop.setPower(0.2);
+//                    telemetry.addData("Ball Hoop Up", targetpostiondown);
+//                    telemetry.addData("Current pos", ballhoop.getCurrentPosition());
+//                    telemetry.update();
+//                }
+//                ballhoop.setPower(0);
+
+                doorDown = true;
+            }
+
+                        //ballhoop.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+
+        if (gamepad1.y)
+        {
+            if (doorDown)
+            {
+                ballhoop.setTargetPosition(targetpostionup);
+                ballhoop.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                ballhoop.setPower(0.2);
+//
+//                while (ballhoop.isBusy())
+//                {
+//
+//                    telemetry.addData("Ball Hoop Down", targetpostionup);
+//                    telemetry.addData("Current pos", ballhoop.getCurrentPosition());
+//                    telemetry.update();
+//                }
+//                ballhoop.setPower(0);
+
+                doorDown = false;
+            }
         }
 
         /*
@@ -125,7 +176,7 @@ public class DriverControl extends OpMode {
             rightback.setPower(turningPower*.5);
             }
         */
-        }
+    }
 
-        //the float and the collector power will enable the collector to move forward and backwards
+    //the float and the collector power will enable the collector to move forward and backwards
 }

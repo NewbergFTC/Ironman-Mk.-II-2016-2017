@@ -18,7 +18,13 @@ public class RedAutonomousMode extends IIOpMode {
 
     public void Run() throws InterruptedException
     {
-        DriveForwardDistance(0.5,5520);
+        DriveForwardDistance(-0.5,5520);
+
+        Autonomous_Shoot();
+
+        Autonomous_Single_Shot();
+
+        //Turning(-100);
 
 
     }

@@ -25,6 +25,8 @@ public abstract class IIOpMode extends LinearVisionOpMode {
     int CLICKS_PER_REVOLUTION = 1120;
     DcMotor leftfront;
     DcMotor rightfront;
+    DcMotor ballhope;
+    DcMotor collector;
 
     protected void Clear()
     {
@@ -36,6 +38,7 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         leftback = null;
         rightback = null;
         shooter = null;
+        ballhope = null;
     }
 
     public void Init()
@@ -46,7 +49,8 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         shooter = hardwareMap.dcMotor.get("sh");
         leftfront = hardwareMap.dcMotor.get("lf");
         rightfront = hardwareMap.dcMotor.get("rf");
-
+        ballhope = hardwareMap.dcMotor.get("bh");
+        collector = hardwareMap.dcMotor.get("cl");
 
         leftback.setDirection(DcMotor.Direction.REVERSE); //Reverses the left back motor
         leftfront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -54,29 +58,70 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         rightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);  //Sets up the robot ready for encoder use
         leftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ballhope.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public  void Autonomous_Shoot(int SHOTS)
+    public void Autonomous_Single_Shot()
     {
-        int GEAR_1 = 33;
-        int GEAR_2 = 64;
-        int revolution_of_flipper = (GEAR_2/GEAR_1)* (SHOTS * CLICKS_PER_REVOLUTION);
         int ShooterTargetValue = shooter.getCurrentPosition();
-        int SHOTS_MADE = revolution_of_flipper * SHOTS;
 
-        shooter.setTargetPosition((revolution_of_flipper * SHOTS) + ShooterTargetValue);
+        shooter.setTargetPosition( 3600 + ShooterTargetValue); //same value as the revoultion of the flipper.
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         shooter.setPower(1);
 
-        while(Math.abs(shooter.getCurrentPosition()) < SHOTS_MADE)
+        //Math.abs(shooter.getCurrentPosition()) < SHOTS_MADE
+        while(shooter.isBusy())
         {
-            telemetry.addData("Shot Value", shooter.getCurrentPosition());
-            telemetry.addData("Target", SHOTS_MADE);
+            telemetry.addData("Shot Pos", shooter.getCurrentPosition());
             //leftback.setPower(power);
             telemetry.update();
         }
+        shooter.setPower(0);
 
+    }
+    public  void Autonomous_Shoot()
+    {
+        int GEAR_1 = 33;
+        int GEAR_2 = 64;
+        int revolution_of_flipper = (GEAR_2/GEAR_1) * (CLICKS_PER_REVOLUTION);
+        int ShooterTargetValue = shooter.getCurrentPosition();
+
+        shooter.setTargetPosition( 3000 + ShooterTargetValue); //same value as the revoultion of the flipper.
+
+
+        shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        shooter.setPower(1);
+
+        //Math.abs(shooter.getCurrentPosition()) < SHOTS_MADE
+        while(shooter.isBusy())
+        {
+            telemetry.addData("Shot Pos", shooter.getCurrentPosition());
+            //leftback.setPower(power);
+            telemetry.update();
+        }
+        shooter.setPower(0);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        collector.setPower(1);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        collector.setPower(0);
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void StopDriving()
@@ -84,13 +129,11 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         leftback.setPower(0);
         rightback.setPower(0);
     }
-    public void Turning(int Wheel_Rotation) throws InterruptedException
+    public void Turning(int TurnTicks) throws InterruptedException
     {
         int RightTurnValue = rightback.getCurrentPosition();
 
-        int Turn = 1200 * Wheel_Rotation;
-
-        leftback.setTargetPosition(Turn + RightTurnValue);
+        leftback.setTargetPosition(TurnTicks + RightTurnValue);
 
         leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this
 
@@ -98,12 +141,12 @@ public abstract class IIOpMode extends LinearVisionOpMode {
 
         leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while(Math.abs(rightback.getCurrentPosition()) < Turn)
+        while(Math.abs(rightback.getCurrentPosition()) < TurnTicks)
         {
             telemetry.addData("Right Turn Value",rightback.getCurrentPosition());
-            telemetry.addData("Target", Turn);
-            rightback.setPower(.8);
-            rightfront.setPower(.8);
+            telemetry.addData("Target", TurnTicks);
+            rightback.setPower(0.9);
+            rightfront.setPower(0.9);
             leftfront.setPower(-1);
             telemetry.update();
         }
@@ -135,6 +178,7 @@ public abstract class IIOpMode extends LinearVisionOpMode {
     {
 
     }
+
     public  void Reverse (double power) throws InterruptedException
     {
         leftback.setPower(-power);
@@ -146,7 +190,38 @@ public abstract class IIOpMode extends LinearVisionOpMode {
     // leftfront.getCurrentPosition(); //get the current postions of the motors
     // rightfront.getCurrentPosition();
 
-    public void DriveForwardDistance(double power, int TARGET_GOAL)
+    public void DriveForwardDistance(double power, int TARGET_GOAL) {
+        telemetry.update();
+        int RightValue = rightback.getCurrentPosition();
+        int LeftValue = leftback.getCurrentPosition();
+
+
+        rightback.setTargetPosition(TARGET_GOAL + RightValue); //sets the Target position for the motors
+        leftback.setTargetPosition(TARGET_GOAL + LeftValue);
+
+        rightback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
+        leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftback.setPower(power);         //sets the power to the Target value.
+        rightback.setPower(power);
+
+        while (Math.abs(rightback.getCurrentPosition()) < TARGET_GOAL) {
+            telemetry.addData("Right", Math.abs(rightback.getCurrentPosition()));
+            telemetry.addData("Left", Math.abs(leftback.getCurrentPosition()));
+            telemetry.addData("Left & Right Goal", TARGET_GOAL);
+            telemetry.update();
+            //while the robot is going to the postion the encoders wont get any info
+        }
+        leftback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        StopDriving();
+    }
+
+
+
+
+
+    public void DriveBackwardsDistance(double power, int TARGET_GOAL)
     {
         telemetry.update();
         int RightValue = rightback.getCurrentPosition();

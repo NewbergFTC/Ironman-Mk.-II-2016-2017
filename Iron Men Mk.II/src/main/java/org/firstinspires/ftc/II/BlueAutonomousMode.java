@@ -21,13 +21,15 @@ public class BlueAutonomousMode extends IIOpMode
     public void Run() throws InterruptedException
 
     {
-        //DriveForwardDistance(.6,4200); // Power is set first then is the target in ticks
+        DriveBackwardsDistance(.6,3600); // Power is set first then is the target in ticks
 
-        //Autonomous_Shoot(1);
+        Autonomous_Shoot();
 
-        Turning(1);
+        Autonomous_Single_Shot();
 
-        getBlueRightSide();
+        //Turning(100);
+
+        //getBlueRightSide();
     }
     /* This is another way of calling the autonomous program. If the top one does not work.
     waitForStart();
