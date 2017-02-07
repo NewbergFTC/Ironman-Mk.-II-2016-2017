@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.II;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -174,53 +173,8 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         StopDriving();
 
     }
-    public void TurnLeft(double power) throws InterruptedException
-    {
-
-    }
-
-    public  void Reverse (double power) throws InterruptedException
-    {
-        leftback.setPower(-power);
-        rightback.setPower(power);
-        sleep(500);
-        leftback.setPower(0);
-        rightback.setPower(0);
-    }
     // leftfront.getCurrentPosition(); //get the current postions of the motors
     // rightfront.getCurrentPosition();
-
-    public void DriveForwardDistance(double power, int TARGET_GOAL) {
-        telemetry.update();
-        int RightValue = rightback.getCurrentPosition();
-        int LeftValue = leftback.getCurrentPosition();
-
-
-        rightback.setTargetPosition(TARGET_GOAL + RightValue); //sets the Target position for the motors
-        leftback.setTargetPosition(TARGET_GOAL + LeftValue);
-
-        rightback.setMode(DcMotor.RunMode.RUN_TO_POSITION); // the encoders are going to this postion
-        leftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        leftback.setPower(power);         //sets the power to the Target value.
-        rightback.setPower(power);
-
-        while (Math.abs(rightback.getCurrentPosition()) < TARGET_GOAL) {
-            telemetry.addData("Right", Math.abs(rightback.getCurrentPosition()));
-            telemetry.addData("Left", Math.abs(leftback.getCurrentPosition()));
-            telemetry.addData("Left & Right Goal", TARGET_GOAL);
-            telemetry.update();
-            //while the robot is going to the postion the encoders wont get any info
-        }
-        leftback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        StopDriving();
-    }
-
-
-
-
-
     public void DriveBackwardsDistance(double power, int TARGET_GOAL)
     {
         telemetry.update();
@@ -313,6 +267,7 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         }
 
         return results;
+
     }
     public void Update() throws InterruptedException
     {

@@ -20,11 +20,9 @@ public class BlueAutonomousFurtherDistance extends IIOpMode {
     {
         DriveBackwardsDistance(.6,2700); // Power is set first then is the target in ticks
 
-        Turning(-10);
+        Autonomous_Shoot(); //This mode shoots a ball and moves the collector which will position a ball
 
-        Autonomous_Shoot();
-
-        Autonomous_Single_Shot();
+        Autonomous_Single_Shot(); //This only shoots the ball
 
         //Turning(100);
 

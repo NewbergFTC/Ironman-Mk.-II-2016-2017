@@ -51,7 +51,7 @@ public class DriverControl extends OpMode {
 
         //The collector is using the left and right triggers to set the power to the collector motor
         double PowerForward = 0.9f; //This is the power if the motor is needed to go forward
-        double PowerBack = -0.9; //This is the power if the motor is needed to go backwards
+        double PowerBack = 0; //This is the power if the motor is needed to go backwards
         double collectorpower = (gamepad1.left_trigger >= 1) ? PowerForward : (gamepad1.right_trigger >= 1) ? PowerBack : 0; //This line of code determines what trigger is being pressed.  Left or right and setting the collector power to whichever button is being pressed
 
         boolean flipperB = gamepad2.b; //A boolean is a true and false. The game pad has most functions as booleans.
