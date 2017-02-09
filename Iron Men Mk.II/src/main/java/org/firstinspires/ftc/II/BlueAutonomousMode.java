@@ -21,15 +21,18 @@ public class BlueAutonomousMode extends IIOpMode
     public void Run() throws InterruptedException
 
     {
+        Turning(20);
+
         DriveBackwardsDistance(.6, 3600); // Power is set first then is the target in ticks
 
         Autonomous_Shoot(); //This mode shoots a ball and moves the collector which will position a ball
 
         Autonomous_Single_Shot(); //This only shoots the ball
 
-        //Turning(100);
+        Turning(80);
 
-        //getBlueRightSide();
+        getBlueRightSide();
+
     }
 }
 
