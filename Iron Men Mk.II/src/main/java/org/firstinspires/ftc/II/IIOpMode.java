@@ -250,8 +250,10 @@ public abstract class IIOpMode extends LinearVisionOpMode {
 
                 if (results > 0)
                 {
-                    DriveBackwardsDistance(0.5,1000);
+                    DriveBackwardsDistance(0.4,500);
                 }
+                else
+                    DriveBackwardsDistance(0.4,700);
 
                 break;
             }
