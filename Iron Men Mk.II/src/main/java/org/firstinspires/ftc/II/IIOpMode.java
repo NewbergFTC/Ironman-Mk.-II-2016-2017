@@ -248,6 +248,11 @@ public abstract class IIOpMode extends LinearVisionOpMode {
 
                 results = beaconAnalysis.isRightBlue() ? 1 : 0;
 
+                if (results > 0)
+                {
+                    DriveBackwardsDistance(0.5,1000);
+                }
+
                 break;
             }
             else
@@ -267,6 +272,8 @@ public abstract class IIOpMode extends LinearVisionOpMode {
         }
 
         return results;
+
+
 
     }
     public void Update() throws InterruptedException
